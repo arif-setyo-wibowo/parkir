@@ -11,9 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parkirs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('parkir', function (Blueprint $table) {
+            $table->bigIncrements('idparkir');
+            $table->unsignedBigInteger('idkategori');
+            $table->string('merk');
+            $table->string('nama_mobil');
+            $table->string('warna');
+            $table->string('plat');
+            $table->string('total', 15)->nullable();;
+            $table->enum('status', ['cekin', 'cekout'])->default('cekin');
+            $table->date('tgl_masuk',255);
             $table->timestamps();
+
+
+            $table->foreign('idkategori')->references('idkategori')->on('kategori');
         });
     }
 
@@ -22,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parkirs');
+        Schema::dropIfExists('parkir');
     }
 };

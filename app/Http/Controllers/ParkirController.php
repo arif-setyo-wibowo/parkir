@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parkir;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ParkirController extends Controller
 {
@@ -13,56 +15,34 @@ class ParkirController extends Controller
     public function index()
     {
         $data=[
-            'title' => "Parkir Inap"
+            'title' => "Parkir Inap",
+            'kategori'  => Kategori::all(),
+            'parkir'  => Parkir::with("kategori")->where('status', 'cekin')->get(),
         ];
         return view('parkir',$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function store(Request $request){
+        $parkir = new Parkir;
+        $parkir->idkategori = $request->idkategori;
+        $parkir->merk = $request->merk;
+        $parkir->nama_mobil = $request->nama_mobil;
+        $parkir->warna = $request->warna;
+        $parkir->plat = $request->plat;
+        $parkir->tgl_masuk = $request->tgl_masuk;
+        $parkir->save();
+        Session::flash('msg', 'Berhasil Menambah Data Check In');
+        return redirect()->route('parkir');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Parkir $parkir)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Parkir $parkir)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Parkir $parkir)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Parkir $parkir)
-    {
-        //
+    public function checkout(Request $request){
+        $id = $request->query('id');
+        $parkir = Parkir::find($id);
+        $kategori = Kategori::find($parkir->idkategori);
+        $parkir->total = max(1, now()->diffInDays($parkir->tgl_masuk)) * $kategori->harga;
+        $parkir->status = 'cekout';
+        $parkir->save();
+        Session::flash('msg', 'Berhasil Melakukan Checkout');
+        return redirect()->route('parkir');
     }
 }

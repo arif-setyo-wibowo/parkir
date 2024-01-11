@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class KategoriController extends Controller
 {
@@ -12,58 +13,36 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        
         $data=[
-            'title' => "Kategori Kendaraan"
+            'title' => "Kategori Kendaraan",
+            'kategori' => Kategori::all()
         ];
         return view('kategori',$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function storeUpdate(Request $request){
+        if ($request->proses == 'Tambah') {
+            $kategori = new Kategori;
+            $kategori->kategori = $request->kategori;
+            $kategori->harga = $request->harga;
+            $kategori->save();
+            Session::flash('msg', 'Berhasil Menambah Data Kategori');
+            return redirect()->route('kategori');
+        }elseif ($request->proses == 'Update') {
+            $kategori = Kategori::find($request->idkategori);
+            $kategori->kategori = $request->kategori;
+            $kategori->harga = $request->harga;
+            $kategori->save();
+            Session::flash('msg', 'Berhasil Mengubah Data Kategori');
+            return redirect()->route('kategori');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Kategori $kategori)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kategori $kategori)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Kategori $kategori)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Kategori $kategori)
-    {
-        //
+    public function destroy(Request $request){
+        $id = $request->query('id');
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+        Session::flash('msg', 'Berhasil Menghapus Data Kategori');
+        return redirect()->route('kategori');
     }
 }

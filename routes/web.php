@@ -18,25 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(DashboardController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('dashboard');
 });
-
-
 
 Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
     Route::get('/', 'index')->name('kategori');
-    Route::post('/', 'store')->name('kategori.tambah');
-    Route::get('/find/{id}', 'edit');
-    Route::post('/update','update')->name('kategori.update');
-    Route::get('/delete/{id}', 'destroy');
+    Route::post('/', 'storeUpdate')->name('kategori.store.update');
+    Route::get('/delete', 'destroy')->name('delete.kategori');
 });
 
 Route::controller(ParkirController::class)->prefix('parkir')->group(function () {
     Route::get('/', 'index')->name('parkir');
     Route::post('/', 'store')->name('parkir.tambah');
-    Route::get('/find/{id}', 'edit');
-    Route::post('/update','update')->name('parkir.update');
-    Route::get('/delete/{id}', 'destroy');
+    Route::get('/checkout', 'checkout')->name('parkir.checkout');
 });
 
 Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
@@ -45,5 +39,3 @@ Route::controller(LaporanController::class)->prefix('laporan')->group(function (
     Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
     Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
 });
-
-   

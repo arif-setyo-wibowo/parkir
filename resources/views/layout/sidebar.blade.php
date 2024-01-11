@@ -21,10 +21,6 @@
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/summernote/summernote-bs4.min.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
 
   {{-- Data Tables --}}
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -33,7 +29,7 @@
 
   <!-- dropzonejs -->
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/dropzone/min/dropzone.min.css">
-  
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -97,48 +93,48 @@
               <p>
                 Kategori Kendaran
               </p>
-            </a> 
+            </a>
           </li>
           <li class="nav-item">
              <a href="{{ route('parkir')}}" @if ($title == 'Parkir Inap') class="nav-link active" @else class="nav-link" @endif>
               <i class="nav-icon fas fa-columns"></i>
               <p>
-                Parkir Inap
+                Parkir
               </p>
-            </a> 
+            </a>
           </li>
           <li class="nav-header">Laporan</li>
           <li class="nav-item">
              <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-              
+
               <p>
                 Laporan masuk per hari
               </p>
-            </a> 
+            </a>
           </li>
           <li class="nav-item">
              <a href="{{ route('laporan.masuk.bulan')}}" @if ($title == 'Laporan Masuk Bulanan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-              
+
               <p>
                 Laporan masuk per bulan
               </p>
-            </a> 
+            </a>
           </li>
           <li class="nav-item">
             <a href="{{ route('laporan.keluar.hari')}}" @if ($title == 'Laporan Keluar Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-             
+
              <p>
                Laporan keluar per hari
              </p>
-           </a> 
+           </a>
          </li>
          <li class="nav-item">
             <a href="{{ route('laporan.keluar.bulan')}}" @if ($title == 'Laporan Keluar Bulanan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-             
+
              <p>
                Laporan keluar per bulan
              </p>
-           </a> 
+           </a>
          </li>
         </ul>
       </nav>
@@ -146,7 +142,7 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-    
+
   @yield('content')
 
   <!-- /.content-wrapper -->
@@ -182,14 +178,10 @@
 <script src="{{ asset('assets/admin/') }}/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{ asset('assets/admin/') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="{{ asset('assets/admin/') }}/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/admin/') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/admin/') }}/dist/js/adminlte.js"></script>
-<!-- Summernote -->
-<script src="../../plugins/summernote/summernote-bs4.min.js"></script>
 
 <script src="{{ asset('assets/admin/') }}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -203,6 +195,7 @@
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="{{ asset('assets/admin') }}/js/custom.js"></script>
 @yield('js')
 </body>
 </html>
