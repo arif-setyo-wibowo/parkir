@@ -24,14 +24,13 @@
                 <div class="row">
                     <div class="col-12">
                         <?php if (session()->has('msg')) :?>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert"
-                                id="autoDismissAlert">
-                                {{ session('msg') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <?php endif ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" id="autoDismissAlert">
+                            {{ session('msg') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <?php endif ?>
                         <div class="card card-primary card-outline card-tabs">
                             <div class="card-header p-0 pt-1 border-bottom-0">
                                 <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
