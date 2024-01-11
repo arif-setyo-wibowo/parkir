@@ -47,7 +47,29 @@
                                         aria-labelledby="custom-tabs-three-home-tab">
                                         <div class="row">
                                             <div class="col-12">
-
+                                                <form action="" method="get">
+                                                    <div class="row my-3">
+                                                        <div class="col-4">
+                                                            Cari Tanggal :
+                                                            <div class="row">
+                                                                <div class="col-10">
+                                                                    <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>
+                                                                </div>
+                                                                <div class="col-2">
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        <i class="fas fa-search"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-5">
+                            
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <h4>Total Kendaraan : {{ $parkir->count() }}</h4>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                                 <table id="example1" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>

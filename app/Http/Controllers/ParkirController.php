@@ -55,6 +55,6 @@ class ParkirController extends Controller
         $keluar->tgl_keluar = date('Y-m-d H:i:s');
         $keluar->save();
         Session::flash('msg', 'Berhasil Melakukan Checkout');
-        return redirect()->route('parkir');
+        return redirect()->route('laporan.stay');
     }
 }

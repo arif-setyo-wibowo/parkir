@@ -71,11 +71,20 @@ class LaporanController extends Controller
     }
 
     function stay(Request $request){
-        $data=[
-            'title' => "Laporan Kendaraan Inap",
-            'kategori'  => Kategori::all(),
-            'parkir'  => Parkir::with("kategori")->where('status', '0')->get(),
-        ];
+
+        if ($request->query('tgl')) {
+            $data=[
+                'title' => "Laporan Kendaraan Inap",
+                'kategori'  => Kategori::all(),
+                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('tgl_masuk', $request->query('tgl'))->get()
+            ];
+        }else{
+            $data=[
+                'title' => "Laporan Kendaraan Inap",
+                'kategori'  => Kategori::all(),
+                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('tgl_masuk', date('Y-m-d'))->get()
+            ];
+        }
 
         return view('laporan/laporan_stay',$data);
     }

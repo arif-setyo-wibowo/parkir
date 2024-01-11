@@ -79,7 +79,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" @if ($title == 'Dashboard') class="nav-link active" @else class="nav-link" @endif>
+            <a href="{{ route('dashboard')}}" @if ($title == 'Dashboard') class="nav-link active" @else class="nav-link" @endif>
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
