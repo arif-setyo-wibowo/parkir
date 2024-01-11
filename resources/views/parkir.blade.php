@@ -133,7 +133,7 @@
                               </div>
 
                             <div class="form-group">
-                              <label>Harga</label>
+                              <label>Harga *mengikuti kategori misal belum pilih kategori disabled ae  hapusen iki  </label>
                               <div class="input-group">
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">Rp.</span>

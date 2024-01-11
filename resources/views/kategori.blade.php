@@ -72,8 +72,12 @@
                         <form action="{{ route('kategori.tambah') }}" method="POST">
                           @csrf
                             <div class="form-group">
-                            <label>Nama Kategori</label>
-                            <input type="text" class="form-control" name="kategori" placeholder="Kategori">
+                              <label>Nama Kategori</label>
+                              <input type="text" class="form-control" name="kategori" placeholder="Kategori">
+                            </div>
+                            <div class="form-group">
+                              <label>Harga Parkir</label>
+                              <input type="text" class="form-control" name="kategori" placeholder="Kategori">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
