@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('plat');
             $table->string('total', 15)->nullable();;
             $table->enum('status', ['cekin', 'cekout'])->default('cekin');
-            $table->date('tgl_masuk',255);
             $table->timestamps();
 
 

@@ -43,7 +43,7 @@
                                 Cari Tanggal :
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="date" name="tgl" class="form-control" required>
+                                        <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>
                                     </div>
                                     <div class="col-2">
                                         <button type="submit" class="btn btn-primary">
@@ -56,7 +56,8 @@
 
                             </div>
                             <div class="col-3">
-                                <h4>Total Kendaraan : {{ $parkir->count() }}</h4>
+                                <h5>Total Kendaraan : {{ $parkir->count() }}</h5>
+                                <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </form>
@@ -69,6 +70,7 @@
                                 <th>Nama Mobil</th>
                                 <th>Plat Nomer</th>
                                 <th>Tanggal Keluar</th>
+                                <th>Total</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -85,6 +87,7 @@
                                     <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
                                     <td>{{ (new \DateTime($data->updated_at))->format('d F Y') }}</td>
+                                    <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
                                     <td><button type="button" class="btn btn-danger btn-sm buttondelete">
                                             Keluar</button>
                                         <a onclick="return confirm('Apakah Anda Yakin Ingin Merubah Status Parkir?')" href="{{ route('ubahstatus', ['id'=>$data->idparkir]) }}" type="button" class="btn btn-primary btn-sm buttondelete">

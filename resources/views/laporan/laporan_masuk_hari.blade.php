@@ -43,7 +43,7 @@
                                 Cari Tanggal :
                                 <div class="row">
                                     <div class="col-10">
-                                        <input type="date" name="tgl" class="form-control" required>
+                                        <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>
                                     </div>
                                     <div class="col-2">
                                         <button type="submit" class="btn btn-primary">
@@ -84,7 +84,7 @@
                                     <td>{{ $data->merk }}</td>
                                     <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
-                                    <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y') }}</td>
+                                    <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}</td>
                                     <td><button type="button" class="btn btn-success btn-sm buttondelete">
                                             Masuk</button>
                                         <a onclick="return confirm('Apakah Anda Yakin Ingin Merubah Status Parkir?')" href="{{ route('ubahstatus', ['id'=>$data->idparkir]) }}" type="button" class="btn btn-primary btn-sm buttondelete">

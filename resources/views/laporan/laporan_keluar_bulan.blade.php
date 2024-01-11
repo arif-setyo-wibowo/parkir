@@ -34,26 +34,26 @@
                                     <div class="col-4">
                                         <select name="bln" class="form-control" required>
                                             <option selected disabled value>Pilih Bulan</option>
-                                            <option value="01">Januari</option>
-                                            <option value="02">Februari</option>
-                                            <option value="03">Maret</option>
-                                            <option value="04">April</option>
-                                            <option value="05">Mei</option>
-                                            <option value="06">Juni</option>
-                                            <option value="07">Juli</option>
-                                            <option value="08">Agustus</option>
-                                            <option value="09">September</option>
-                                            <option value="10">Oktober</option>
-                                            <option value="11">November</option>
-                                            <option value="12">Desember</option>
+                                            <option value="01" {{ request()->input('bln') == '01' ? 'selected' : '' }}>Januari</option>
+                                            <option value="02" {{ request()->input('bln') == '02' ? 'selected' : '' }}>Februari</option>
+                                            <option value="03" {{ request()->input('bln') == '03' ? 'selected' : '' }}>Maret</option>
+                                            <option value="04" {{ request()->input('bln') == '04' ? 'selected' : '' }}>April</option>
+                                            <option value="05" {{ request()->input('bln') == '05' ? 'selected' : '' }}>Mei</option>
+                                            <option value="06" {{ request()->input('bln') == '06' ? 'selected' : '' }}>Juni</option>
+                                            <option value="07" {{ request()->input('bln') == '07' ? 'selected' : '' }}>Juli</option>
+                                            <option value="08" {{ request()->input('bln') == '08' ? 'selected' : '' }}>Agustus</option>
+                                            <option value="09" {{ request()->input('bln') == '09' ? 'selected' : '' }}>September</option>
+                                            <option value="10" {{ request()->input('bln') == '10' ? 'selected' : '' }}>Oktober</option>
+                                            <option value="11" {{ request()->input('bln') == '11' ? 'selected' : '' }}>November</option>
+                                            <option value="12" {{ request()->input('bln') == '12' ? 'selected' : '' }}>Desember</option>
                                         </select>
                                     </div>
                                     <div class="col-4">
                                         <select name="thn" class="form-control" required>
-                                            <option selected disabled value>Pilih Tahun</option>
+                                            <option disabled value selected>Pilih Tahun</option>
                                             @for ($tahun = 2000; $tahun <= 2030; $tahun++)
-                                                <option value="{{ $tahun }}"
-                                                    {{ old('tahun') == $tahun ? 'selected' : '' }}>{{ $tahun }}
+                                                <option value="{{ $tahun }}" {{ request()->input('thn') == $tahun ? 'selected' : '' }}>
+                                                    {{ $tahun }}
                                                 </option>
                                             @endfor
                                         </select>
@@ -69,7 +69,8 @@
 
                             </div>
                             <div class="col-3">
-                                <h4>Total Kendaraan : {{ $parkir->count() }}</h4>
+                                <h5>Total Kendaraan : {{ $parkir->count() }}</h5>
+                                <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </form>
@@ -82,6 +83,7 @@
                                 <th>Nama Mobil</th>
                                 <th>Plat Nomer</th>
                                 <th>Tanggal Keluar</th>
+                                <th>Total</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -98,6 +100,7 @@
                                     <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
                                     <td>{{ (new \DateTime($data->updated_at))->format('d F Y') }}</td>
+                                    <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
                                     <td><button type="button" class="btn btn-danger btn-sm buttondelete">
                                             Keluar</button>
                                         <a onclick="return confirm('Apakah Anda Yakin Ingin Merubah Status Parkir?')" href="{{ route('ubahstatus', ['id'=>$data->idparkir]) }}" type="button" class="btn btn-primary btn-sm buttondelete">

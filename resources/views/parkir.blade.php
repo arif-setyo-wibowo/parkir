@@ -77,9 +77,9 @@
                                                                 <td>{{ $data->nama_mobil }}</td>
                                                                 <td>{{ $data->warna }}</td>
                                                                 <td>{{ $data->plat }}</td>
-                                                                <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y') }}
+                                                                <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}
                                                                 </td>
-                                                                <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)) * $data->kategori->harga, 0, ',', '.') }}
+                                                                <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->created_at)+1) * $data->kategori->harga, 0, ',', '.') }}
                                                                 </td>
                                                                 <td><a class="btn btn-danger btn-sm"
                                                                         onclick="return confirm('Apakah Anda Yakin Ingin Check Out Kendaraan Ini?')"
@@ -131,12 +131,6 @@
                                                 <label>Plat Nomer</label>
                                                 <input type="text" class="form-control" name="plat" id="plat"
                                                     placeholder="Plat Nomer" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Tanggal Masuk</label>
-                                                <input type="date" class="form-control" name="tgl_masuk" id="tgl_masuk"
-                                                    placeholder="Tanggal Masuk" required
-                                                    max="{{ now()->format('Y-m-d') }}">
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" name="proses" id="proses" value="Tambah"
