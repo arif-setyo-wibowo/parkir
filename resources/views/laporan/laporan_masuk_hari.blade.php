@@ -85,10 +85,8 @@
                                     <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
                                     <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}</td>
-                                    <td><button type="button" class="btn btn-success btn-sm buttondelete">
-                                            Masuk</button>
-                                        <a onclick="return confirm('Apakah Anda Yakin Ingin Merubah Status Parkir?')" href="{{ route('ubahstatus', ['id'=>$data->idparkir]) }}" type="button" class="btn btn-primary btn-sm buttondelete">
-                                            Ubah Status</a>
+                                    <td><button type="button" class="btn {{$data->status == '0' ? 'btn-success' : 'btn-danger'}} btn-sm">
+                                        {{$data->status == '0' ? 'Aktif' : 'Sudah Keluar'}}</button>
                                     </td>
                                 </tr>
                             @endforeach

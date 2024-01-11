@@ -39,5 +39,3 @@ Route::controller(LaporanController::class)->prefix('laporan')->group(function (
     Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
     Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
 });
-
-Route::get('/ubah-status', [LaporanController::class, 'ubahStatus'])->name('ubahstatus');

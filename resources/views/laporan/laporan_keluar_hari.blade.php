@@ -67,11 +67,11 @@
                                 <th style="width: 5%;">No.</th>
                                 <th>Kategori</th>
                                 <th>Merk</th>
-                                <th>Nama Mobil</th>
                                 <th>Plat Nomer</th>
+                                <th>Tanggal Masuk</th>
                                 <th>Tanggal Keluar</th>
+                                <th>Lama Inap</th>
                                 <th>Total</th>
-                                <th>Status</th>
                             </tr>
                         </thead>
                         @if ($parkir->count() == 0)
@@ -84,15 +84,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->kategori->kategori }}</td>
                                     <td>{{ $data->merk }}</td>
-                                    <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
-                                    <td>{{ (new \DateTime($data->updated_at))->format('d F Y') }}</td>
+                                    <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}</td>
+                                    <td>{{ (new \DateTime($data->tgl_keluar))->format('d F Y H:i:s') }}</td>
+                                    <td>{{max(1, floor((strtotime($data->tgl_keluar) - strtotime($data->tgl_masuk)) / 86400) + 1)}} Hari</td>
                                     <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
-                                    <td><button type="button" class="btn btn-danger btn-sm buttondelete">
-                                            Keluar</button>
-                                        <a onclick="return confirm('Apakah Anda Yakin Ingin Merubah Status Parkir?')" href="{{ route('ubahstatus', ['id'=>$data->idparkir]) }}" type="button" class="btn btn-primary btn-sm buttondelete">
-                                            Ubah Status</a>
-                                    </td>
                                 </tr>
                             @endforeach
                         @endif

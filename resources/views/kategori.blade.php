@@ -73,7 +73,7 @@
                                                                 Edit
                                                             </button>
                                                             <a class="btn btn-danger btn-sm"
-                                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Kategori?')"
+                                                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Kategori? Menghapus Kategori Dapat Menghapus Seluruh Data Yang Berelasi')"
                                                                 href="{{ route('delete.kategori', ['id' => $data->idkategori]) }}">
                                                                 <i class="fas fa-trash">
                                                                 </i>

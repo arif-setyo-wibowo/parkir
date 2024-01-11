@@ -77,9 +77,9 @@
                                                                 <td>{{ $data->nama_mobil }}</td>
                                                                 <td>{{ $data->warna }}</td>
                                                                 <td>{{ $data->plat }}</td>
-                                                                <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}
+                                                                <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}
                                                                 </td>
-                                                                <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->created_at)+1) * $data->kategori->harga, 0, ',', '.') }}
+                                                                <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }}
                                                                 </td>
                                                                 <td><a class="btn btn-danger btn-sm"
                                                                         onclick="return confirm('Apakah Anda Yakin Ingin Check Out Kendaraan Ini?')"

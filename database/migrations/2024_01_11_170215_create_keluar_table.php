@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parkir', function (Blueprint $table) {
-            $table->bigIncrements('idparkir');
+        Schema::create('keluar', function (Blueprint $table) {
+            $table->bigIncrements('idkeluar');
             $table->unsignedBigInteger('idkategori');
             $table->string('merk');
             $table->string('nama_mobil');
             $table->string('warna');
             $table->string('plat');
-            $table->timestamp('tgl_masuk', $precision = 0);
-            $table->enum('status', ['0', '1'])->default('0');
+            $table->timestamp('tgl_masuk')->nullable();
+            $table->timestamp('tgl_keluar')->nullable();
+            $table->string('total');
             $table->timestamps();
 
             $table->foreign('idkategori')->references('idkategori')->on('kategori')->onUpdate('cascade')->onDelete('cascade');
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parkir');
+        Schema::dropIfExists('keluar');
     }
 };
