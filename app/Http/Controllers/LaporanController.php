@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Parkir;
 use App\Models\Keluar;
@@ -67,5 +68,15 @@ class LaporanController extends Controller
         }
 
         return view('laporan/laporan_keluar_bulan',$data);
+    }
+
+    function stay(Request $request){
+        $data=[
+            'title' => "Laporan Kendaraan Inap",
+            'kategori'  => Kategori::all(),
+            'parkir'  => Parkir::with("kategori")->where('status', '0')->get(),
+        ];
+
+        return view('laporan/laporan_stay',$data);
     }
 }

@@ -38,4 +38,5 @@ Route::controller(LaporanController::class)->prefix('laporan')->group(function (
     Route::get('/masuk-bulanan', 'masukBulanan')->name('laporan.masuk.bulan');
     Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
     Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
+    Route::get('/parkir-stay', 'stay')->name('laporan.stay');
 });

@@ -105,6 +105,14 @@
           </li>
           <li class="nav-header">Laporan</li>
           <li class="nav-item">
+            <a href="{{ route('laporan.stay')}}" @if ($title == 'Laporan Kendaraan Inap') class="nav-link active" @else class="nav-link" @endif>
+
+             <p>
+               Laporan kendaraan inap
+             </p>
+           </a>
+         </li>
+          <li class="nav-item">
              <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
 
               <p>
