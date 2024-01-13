@@ -38,7 +38,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" id="custom-tab-kategori" data-toggle="pill"
                                         href="#tab-kategori" role="tab" aria-controls="tab-kategori"
-                                        aria-selected="true">Data Kategori</a>
+                                        aria-selected="true">Data User</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="custom-tab-tambah-edit" data-toggle="pill"
