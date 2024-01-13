@@ -40,7 +40,7 @@
                     <form action="" method="get">
                         <div class="row my-3">
                             <div class="col-4">
-                                Cari Tanggal :
+                                Cari Tanggal Keluar :
                                 <div class="row">
                                     <div class="col-10">
                                         <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>

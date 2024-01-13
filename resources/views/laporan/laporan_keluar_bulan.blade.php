@@ -29,7 +29,7 @@
                     <form action="" method="get">
                         <div class="row my-3">
                             <div class="col-6">
-                                Cari Berdasar Bulan dan Tahun :
+                                Cari Berdasar Bulan dan Tahun Keluar:
                                 <div class="row">
                                     <div class="col-4">
                                         <select name="bln" class="form-control" required>

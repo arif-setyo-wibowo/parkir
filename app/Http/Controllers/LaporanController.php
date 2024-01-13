@@ -15,9 +15,9 @@ class LaporanController extends Controller
         $data['title'] = "Laporan Masuk Harian Kendaraan";
 
         if ($request->query('tgl')) {
-            $data['parkir'] = Parkir::with("kategori")->whereDate('tgl_masuk', $request->query('tgl'))->get();
+            $data['parkir'] = Parkir::with("kategori")->whereDate('created_at', $request->query('tgl'))->get();
         }else{
-            $data['parkir'] = Parkir::with("kategori")->whereDate('tgl_masuk', date('Y-m-d'))->get();
+            $data['parkir'] = Parkir::with("kategori")->whereDate('created_at', date('Y-m-d'))->get();
         }
 
         return view('laporan/laporan_masuk_hari',$data);
@@ -27,9 +27,9 @@ class LaporanController extends Controller
         $data['title'] = "Laporan Masuk Bulanan Kendaraan";
 
         if ($request->query('bln') && $request->query('thn')) {
-            $data['parkir'] = Parkir::with("kategori")->whereMonth('tgl_masuk', $request->query('bln'))->whereYear('tgl_masuk', $request->query('thn'))->get();
+            $data['parkir'] = Parkir::with("kategori")->whereMonth('created_at', $request->query('bln'))->whereYear('tgl_masuk', $request->query('thn'))->get();
         }else{
-            $data['parkir'] = Parkir::with("kategori")->whereMonth('tgl_masuk', now()->month)->whereYear('tgl_masuk', now()->year)->get();
+            $data['parkir'] = Parkir::with("kategori")->whereMonth('created_at', now()->month)->whereYear('tgl_masuk', now()->year)->get();
         }
 
         return view('laporan/laporan_masuk_bulan',$data);
@@ -76,13 +76,13 @@ class LaporanController extends Controller
             $data=[
                 'title' => "Laporan Kendaraan Inap",
                 'kategori'  => Kategori::all(),
-                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('tgl_masuk', $request->query('tgl'))->get()
+                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('created_at', $request->query('tgl'))->get()
             ];
         }else{
             $data=[
                 'title' => "Laporan Kendaraan Inap",
                 'kategori'  => Kategori::all(),
-                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('tgl_masuk', date('Y-m-d'))->get()
+                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('created_at', date('Y-m-d'))->get()
             ];
         }
 

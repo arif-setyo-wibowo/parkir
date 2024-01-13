@@ -100,7 +100,7 @@
                                     <td>{{ $data->merk }}</td>
                                     <td>{{ $data->nama_mobil }}</td>
                                     <td>{{ $data->plat }}</td>
-                                    <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}</td>
+                                    <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}</td>
                                     <td><button type="button" class="btn {{$data->status == '0' ? 'btn-success' : 'btn-danger'}} btn-sm">
                                         {{$data->status == '0' ? 'Aktif' : 'Sudah Keluar'}}</button>
                                     </td>

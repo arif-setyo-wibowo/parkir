@@ -28,7 +28,7 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form method="POST" action="">
+                <form method="POST" action="{{ url()->current()}}">
                     @csrf
                     <!-- ... -->
                     <div class="input-group mb-3">
