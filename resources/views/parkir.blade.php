@@ -82,7 +82,7 @@
                                                                 <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }}
                                                                 </td>
                                                                 <td><a class="btn btn-danger btn-sm"
-                                                                        onclick="return confirm('Apakah Anda Yakin Ingin Check Out Kendaraan Ini?')"
+                                                                        onclick="return confirm('Apakah Anda Yakin Ingin Check Out dengan biaya parkir sebesar {{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }} Kendaraan Ini?')"
                                                                         href="{{ route('parkir.checkout', ['id' => $data->idparkir]) }}">
                                                                         Check Out
                                                                     </a>

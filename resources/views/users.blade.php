@@ -90,22 +90,23 @@
                                 </div>
                                 <div class="tab-pane fade" id="tab-tambah-edit" role="tabpanel"
                                     aria-labelledby="custom-tab-tambah-edit">
-                                    <form action="{{ route('kategori.store.update') }}" method="POST">
+                                    <form action="{{ route('users.store.update') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Nama</label>
-                                            <input type="text" class="form-control" id="kategori" name="kategori"
+                                            <input type="text" class="form-control" id="nama" name="nama"
                                                 placeholder="Masukkan User" required>
-                                            <input type="hidden" name="idkategori" id="idkategori">
+                                            <input type="hidden" name="idusers" id="idusers">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Username</label>
-                                            <input type="number" class="form-control" id="harga" name="harga"
+                                            <input type="text" class="form-control" id="username" name="username"
                                                 placeholder="Masukkan Username" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Password</label>
-                                            <input type="number" class="form-control" id="harga" name="harga"
+                                            <input type="hidden" class="form-control" id="password_lama" name="password_lama">
+                                            <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="Masukkan Password" required>
                                         </div>
                                         <div class="form-group">

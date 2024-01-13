@@ -49,4 +49,5 @@ Route::controller(LoginController::class)->prefix('login')->group(function () {
 
 Route::controller(UsersController::class)->prefix('login')->group(function () {
     Route::get('/', 'index')->name('users');
+    Route::post('/', 'storeUpdate')->name('users.store.update');
 });
