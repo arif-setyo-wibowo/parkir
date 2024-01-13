@@ -24,15 +24,24 @@ class ParkirController extends Controller
     }
 
     public function store(Request $request){
-        $parkir = new Parkir;
-        $parkir->idkategori = $request->idkategori;
-        $parkir->merk = $request->merk;
-        $parkir->nama_mobil = $request->nama_mobil;
-        $parkir->warna = $request->warna;
-        $parkir->plat = $request->plat;
-        $parkir->save();
-        Session::flash('msg', 'Berhasil Menambah Data Check In');
-        return redirect()->route('parkir');
+
+        $total = Parkir::with("kategori")->where('status', '0')->count();
+
+        if($total <= 45){
+            $parkir = new Parkir;
+            $parkir->idkategori = $request->idkategori;
+            $parkir->merk = $request->merk;
+            $parkir->nama_mobil = $request->nama_mobil;
+            $parkir->warna = $request->warna;
+            $parkir->plat = $request->plat;
+            $parkir->save();
+            Session::flash('msg', 'Berhasil Menambah Data Check In');
+            return redirect()->route('parkir');
+        }else{
+            Session::flash('msg', 'Parkiran Penuh');
+            return redirect()->route('parkir');
+        }
+        
     }
 
     public function checkout(Request $request){
