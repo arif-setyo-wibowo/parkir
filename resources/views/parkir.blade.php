@@ -18,7 +18,6 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        {{$totalCount}}
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
