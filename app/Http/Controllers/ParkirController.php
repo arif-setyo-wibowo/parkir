@@ -34,6 +34,7 @@ class ParkirController extends Controller
             $parkir->nama_mobil = $request->nama_mobil;
             $parkir->warna = $request->warna;
             $parkir->plat = $request->plat;
+            $parkir->telp = $request->telp;
             $parkir->save();
             Session::flash('msg', 'Berhasil Menambah Data Check In');
             return redirect()->route('parkir');

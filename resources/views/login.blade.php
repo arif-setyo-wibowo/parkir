@@ -27,12 +27,18 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @foreach ($errors->all() as $error)
+                            <i class="bi bi-exclamation-octagon me-1"> {{ $error }} </i><br>
+                        @endforeach
+                    </div>
+                @endif
                 <form method="POST" action="{{ url()->current()}}">
                     @csrf
                     <!-- ... -->
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
+                        <input type="text" class="form-control" name="username" placeholder="username">
                         <!-- ... -->
                     </div>
                     <div class="input-group mb-3">

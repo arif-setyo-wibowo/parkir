@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_mobil');
             $table->string('warna');
             $table->string('plat');
+            $table->string('telp');
             $table->timestamp('tgl_masuk', $precision = 0);
             $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();

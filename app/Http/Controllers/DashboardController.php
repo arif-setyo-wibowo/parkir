@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
+use App\Models\Parkir;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +15,9 @@ class DashboardController extends Controller
     {
         
         $data=[
-            'title' => "Dashboard"
+            'title' => "Dashboard",
+            'totalStay' => Parkir::with("kategori")->where('status', '0')->count(),
+
         ];
         return view('dashboard',$data);
     }

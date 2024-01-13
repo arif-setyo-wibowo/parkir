@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item ">Contact Message</li>
+                        <li class="breadcrumb-item ">Users </li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -32,6 +32,16 @@
                         </button>
                     </div>
                     <?php endif ?>
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="autoDismissAlert">
+                            @foreach ($errors->all() as $error)
+                            {{ $error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="card card-primary card-outline card-tabs">
                         <div class="card-header p-0 pt-1 border-bottom-0">
                             <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
@@ -58,33 +68,31 @@
                                                 <th>No</th>
                                                 <th>Nama</th>
                                                 <th>Username</th>
-                                                <th>Role</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
-                                                <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                        @foreach ($user as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->nama }}</td>
+                                                <td>{{ $item->username }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-info btn-sm"
-                                                            onclick="editKategori('','','')">
+                                                            onclick="editPengguna('{{ $item->id }}','{{ $item->nama }}','{{ $item->username }}','{{ $item->password }}')">
                                                             <i class="fas fa-pencil-alt"></i>
                                                             Edit
                                                         </button>
                                                         <a class="btn btn-danger btn-sm"
-                                                            onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Kategori? Menghapus Kategori Dapat Menghapus Seluruh Data Yang Berelasi')"
-                                                            href="">
+                                                            onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data User?')"
+                                                            href="{{ route('delete.user', ['id' => $item->id]) }}">
                                                             <i class="fas fa-trash">
                                                             </i>
                                                             Delete
                                                         </a>
                                                     </td>
                                                 </tr>
-                                            
+                                             @endforeach
                                             </tfoot>
                                     </table>
                                 </div>
@@ -96,7 +104,7 @@
                                             <label for="exampleInputEmail1">Nama</label>
                                             <input type="text" class="form-control" id="nama" name="nama"
                                                 placeholder="Masukkan User" required>
-                                            <input type="hidden" name="idusers" id="idusers">
+                                            <input type="hidden" name="id" id="id">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Username</label>
@@ -108,6 +116,7 @@
                                             <input type="hidden" class="form-control" id="password_lama" name="password_lama">
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="Masukkan Password" required>
+                                            <span class="text-danger" id="notifPassword"></span>
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" name="proses" id="proses" value="Tambah"
@@ -127,7 +136,7 @@
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('assets/admin') }}/assets/js/custom/kategori.js"></script>
+<script src="{{ asset('assets/admin') }}/assets/js/custom.js"></script>
 <script>
     $(function () {
       $("#example1").DataTable({

@@ -58,7 +58,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('assets/admin/') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">CV </span>
     </a>
 
     <!-- Sidebar -->
@@ -69,7 +69,7 @@
           <img src="{{ asset('assets/admin/') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{ Session::get('nama.admin')}}</a>
         </div>
       </div>
 
@@ -89,7 +89,7 @@
           <li class="nav-header">Parkir</li>
           <li class="nav-item">
              <a href="{{ route('kategori')}}" @if ($title == 'Kategori Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-              <i class="nav-icon far fa-image"></i>
+              <i class="nav-icon fas fa-columns"></i>
               <p>
                 Kategori Kendaran
               </p>
@@ -152,6 +152,15 @@
              </p>
            </a>
          </li>
+         
+        <li class="nav-item">
+          <a href="{{ route('logout')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
+           <i class="nav-icon fas fa-user"></i>
+           <p>
+             Logout
+           </p>
+         </a>
+       </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

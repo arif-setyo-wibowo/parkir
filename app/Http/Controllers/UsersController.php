@@ -18,13 +18,17 @@ class UsersController extends Controller
     {
         
         $data=[
-            'title' => "Users"
+            'title' => "Users",
+            'user' => User::all()
         ];
         return view('users',$data);
     }
 
     public function storeUpdate(Request $request){
         if ($request->proses == 'Tambah') {
+            $request->validate([
+                'username' => 'unique:users',
+            ]);
             $user = new User;
             $user->nama = $request->nama;
             $user->username = $request->username;
@@ -34,14 +38,10 @@ class UsersController extends Controller
             return redirect()->route('users');
         }elseif ($request->proses == 'Update') {
             
-            $user = User::find($request->iduser);
+            $user = User::find($request->id);
+
             $request->validate([
-                'nama_user' => 'required',
-                'level' => 'required',
-                'username'=>[
-                    'username',
-                    Rule::unique('users')->ignore($user->id),
-                ]
+                'username'=> Rule::unique('users')->ignore($user->id)
             ]);
 
             if($request->password == null){
@@ -68,43 +68,16 @@ class UsersController extends Controller
             return redirect()->route('users');
         }
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Dashboard $dashboard)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dashboard $dashboard)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->query('id');
+        $user = User::find($id);
+        $user->delete();
+        Session::flash('msg', 'Berhasil Menghapus Data User');
+        return redirect()->route('users');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dashboard;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -19,51 +20,37 @@ class LoginController extends Controller
         return view('login',$data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function postlogin(Request $request)
     {
-        //
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ],[
+            'username.required' => 'Username admin harus diisi.',
+            'username.username' => 'Username admin tidak valid.',
+            'password.required' => 'Kata sandi admin harus diisi.',
+        ]);
+
+        $user = User::where('username', $request->username)->first();
+
+        if ($user) {
+            if (password_verify($request->password, $user->password)) {
+                    session(['admin' => true]);
+                    session(['user.admin' => $user->username]);
+                    session(['nama.admin' => $user->nama]);                                  
+                    return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('login')->withErrors(['error' => 'Password salah'])->withInput();
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['error' => 'Email tidak ditemukan'])->withInput();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Dashboard $dashboard)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Dashboard $dashboard)
-    {
-        //
+    public function logout (Request $request){
+        session()->forget('admin');
+        session()->forget('user.admin');
+        session()->forget('nama.admin'); 
+        return redirect()->route('login');
     }
 }

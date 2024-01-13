@@ -19,35 +19,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(DashboardController::class)->group(function () {
-    Route::get('/', 'index')->name('dashboard');
-});
-
-Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
-    Route::get('/', 'index')->name('kategori');
-    Route::post('/', 'storeUpdate')->name('kategori.store.update');
-    Route::get('/delete', 'destroy')->name('delete.kategori');
-});
-
-Route::controller(ParkirController::class)->prefix('parkir')->group(function () {
-    Route::get('/', 'index')->name('parkir');
-    Route::post('/', 'store')->name('parkir.tambah');
-    Route::get('/checkout', 'checkout')->name('parkir.checkout');
-});
-
-Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
-    Route::get('/masuk-harian', 'masukHarian')->name('laporan.masuk.hari');
-    Route::get('/masuk-bulanan', 'masukBulanan')->name('laporan.masuk.bulan');
-    Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
-    Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
-    Route::get('/parkir-stay', 'stay')->name('laporan.stay');
-});
 
 Route::controller(LoginController::class)->prefix('login')->group(function () {
     Route::get('/', 'index')->name('login');
+    Route::post('/', 'postlogin')->name('postlogin');
 });
 
-Route::controller(UsersController::class)->prefix('login')->group(function () {
-    Route::get('/', 'index')->name('users');
-    Route::post('/', 'storeUpdate')->name('users.store.update');
+Route::middleware('user')->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('dashboard');
+    });
+
+    Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
+        Route::get('/', 'index')->name('kategori');
+        Route::post('/', 'storeUpdate')->name('kategori.store.update');
+        Route::get('/delete', 'destroy')->name('delete.kategori');
+    });
+
+    Route::controller(ParkirController::class)->prefix('parkir')->group(function () {
+        Route::get('/', 'index')->name('parkir');
+        Route::post('/', 'store')->name('parkir.tambah');
+        Route::get('/checkout', 'checkout')->name('parkir.checkout');
+    });
+
+    Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
+        Route::get('/masuk-harian', 'masukHarian')->name('laporan.masuk.hari');
+        Route::get('/masuk-bulanan', 'masukBulanan')->name('laporan.masuk.bulan');
+        Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
+        Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
+        Route::get('/parkir-stay', 'stay')->name('laporan.stay');
+    });
+
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    
+    Route::controller(UsersController::class)->prefix('users')->group(function () {
+        Route::get('/', 'index')->name('users');
+        Route::post('/', 'storeUpdate')->name('users.store.update');
+        Route::get('/delete', 'destroy')->name('delete.user');
+    });
 });

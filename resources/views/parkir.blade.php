@@ -63,6 +63,7 @@
                                                             <th>Nama Mobil</th>
                                                             <th>Warna</th>
                                                             <th>Plat Nomer</th>
+                                                            <th>Telp</th>
                                                             <th>Mulai Tanggal </th>
                                                             <th>Harga </th>
                                                             <th>Action</th>
@@ -77,6 +78,7 @@
                                                                 <td>{{ $data->nama_mobil }}</td>
                                                                 <td>{{ $data->warna }}</td>
                                                                 <td>{{ $data->plat }}</td>
+                                                                <td>{{ $data->telp }}</td>
                                                                 <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}
                                                                 </td>
                                                                 <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }}
@@ -131,6 +133,11 @@
                                                 <label>Plat Nomer</label>
                                                 <input type="text" class="form-control" name="plat" id="plat"
                                                     placeholder="Plat Nomer" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Telp</label>
+                                                <input type="text" class="form-control" name="telp" id="telp"
+                                                    placeholder="Telp" required>
                                             </div>
                                             <div class="form-group">
                                                 <input type="submit" name="proses" id="proses" value="Tambah"
