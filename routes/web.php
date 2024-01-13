@@ -3,7 +3,9 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ParkirController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,4 +41,12 @@ Route::controller(LaporanController::class)->prefix('laporan')->group(function (
     Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
     Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
     Route::get('/parkir-stay', 'stay')->name('laporan.stay');
+});
+
+Route::controller(LoginController::class)->prefix('login')->group(function () {
+    Route::get('/', 'index')->name('login');
+});
+
+Route::controller(UsersController::class)->prefix('login')->group(function () {
+    Route::get('/', 'index')->name('users');
 });

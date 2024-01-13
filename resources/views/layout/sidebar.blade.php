@@ -103,6 +103,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+             <a href="{{ route('users')}}" @if ($title == 'Users') class="nav-link active" @else class="nav-link" @endif>
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Users
+              </p>
+            </a>
+          </li>
           <li class="nav-header">Laporan</li>
           <li class="nav-item">
             <a href="{{ route('laporan.stay')}}" @if ($title == 'Laporan Kendaraan Inap') class="nav-link active" @else class="nav-link" @endif>
