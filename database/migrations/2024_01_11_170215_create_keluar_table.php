@@ -13,17 +13,15 @@ return new class extends Migration
     {
         Schema::create('keluar', function (Blueprint $table) {
             $table->bigIncrements('idkeluar');
-            $table->unsignedBigInteger('idkategori');
-            $table->string('merk');
-            $table->string('nama_mobil');
-            $table->string('warna');
-            $table->string('plat');
+            $table->unsignedBigInteger('idparkir');
+            $table->unsignedBigInteger('iduser');
             $table->timestamp('tgl_masuk')->nullable();
             $table->timestamp('tgl_keluar')->nullable();
             $table->string('total');
             $table->timestamps();
 
-            $table->foreign('idkategori')->references('idkategori')->on('kategori')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('idparkir')->references('idparkir')->on('parkir')->onUpdate('cascade')->onDelete('restrict');
+            //$table->foreign('idkategori')->references('idkategori')->on('kategori')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

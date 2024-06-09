@@ -57,7 +57,7 @@
                             </div>
                             <div class="col-3">
                                 <h5>Total Kendaraan : {{ $parkir->count() }}</h5>
-                                <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5>
+                                {{-- <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5> --}}
                             </div>
                         </div>
                     </form>

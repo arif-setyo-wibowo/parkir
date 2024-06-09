@@ -39,19 +39,21 @@ Route::middleware('user')->group(function () {
     Route::controller(ParkirController::class)->prefix('parkir')->group(function () {
         Route::get('/', 'index')->name('parkir');
         Route::post('/', 'store')->name('parkir.tambah');
+        Route::get('/cek-data/{id}', 'show')->name('parkir.detail');
         Route::get('/checkout', 'checkout')->name('parkir.checkout');
     });
 
     Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
-        Route::get('/masuk-harian', 'masukHarian')->name('laporan.masuk.hari');
-        Route::get('/masuk-bulanan', 'masukBulanan')->name('laporan.masuk.bulan');
-        Route::get('/keluar-harian', 'keluarHarian')->name('laporan.keluar.hari');
-        Route::get('/keluar-bulanan', 'keluarBulanan')->name('laporan.keluar.bulan');
-        Route::get('/parkir-stay', 'stay')->name('laporan.stay');
+        Route::get('/keluar', 'keluar')->name('laporan.keluar');
+        Route::get('/keluar-pdf', 'keluar_pdf')->name('laporan.keluar.pdf');
+        Route::get('/masuk', 'masuk')->name('laporan.masuk');
+        Route::get('/pendapatan', 'pendapatan')->name('laporan.pendapatan');
+        Route::get('/pendapatan-user', 'pendapatan_user')->name('laporan.pendapatan.user');
+        Route::get('/pendapatan-kategori', 'pendapatan_kategori')->name('laporan.pendapatan.kategori');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-    
+
     Route::controller(UsersController::class)->prefix('users')->group(function () {
         Route::get('/', 'index')->name('users');
         Route::post('/', 'storeUpdate')->name('users.store.update');

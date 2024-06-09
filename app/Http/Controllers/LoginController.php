@@ -13,7 +13,7 @@ class LoginController extends Controller
      */
     public function index()
     {
-        
+
         $data=[
             'title' => "Dashboard"
         ];
@@ -36,8 +36,9 @@ class LoginController extends Controller
         if ($user) {
             if (password_verify($request->password, $user->password)) {
                     session(['admin' => true]);
+                    session(['user.id' => $user->id]);
                     session(['user.admin' => $user->username]);
-                    session(['nama.admin' => $user->nama]);                                  
+                    session(['nama.admin' => $user->nama]);
                     return redirect()->route('dashboard');
             } else {
                 return redirect()->route('login')->withErrors(['error' => 'Password salah'])->withInput();
@@ -49,8 +50,9 @@ class LoginController extends Controller
 
     public function logout (Request $request){
         session()->forget('admin');
+        session()->forget('user.id');
         session()->forget('user.admin');
-        session()->forget('nama.admin'); 
+        session()->forget('nama.admin');
         return redirect()->route('login');
     }
 }

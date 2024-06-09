@@ -28,10 +28,10 @@
                 <div class="card-body">
                     <form action="" method="get">
                         <div class="row my-3">
-                            <div class="col-6">
-                                Cari Berdasar Bulan dan Tahun Keluar:
+                            <div class="col-10">
+                                Cari Berdasar Bulan dan Tahun Pendapatan:
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <select name="bln" class="form-control" required>
                                             <option selected disabled value>Pilih Bulan</option>
                                             <option value="01" {{ request()->input('bln') == '01' ? 'selected' : '' }}>Januari</option>
@@ -48,7 +48,7 @@
                                             <option value="12" {{ request()->input('bln') == '12' ? 'selected' : '' }}>Desember</option>
                                         </select>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-3">
                                         <select name="thn" class="form-control" required>
                                             <option disabled value selected>Pilih Tahun</option>
                                             @for ($tahun = 2000; $tahun <= 2030; $tahun++)
@@ -58,6 +58,16 @@
                                             @endfor
                                         </select>
                                     </div>
+                                    <div class="col-3">
+                                        <select name="kategori" class="form-control" required>
+                                            <option disabled value selected>Pilih Kategori</option>
+                                            @foreach ($kategori as $item)
+                                                <option value="{{ $item->id}}">
+                                                    {{ $item->kategori }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="col-2">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fas fa-search"></i>
@@ -65,16 +75,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3">
-
-                            </div>
-                            <div class="col-3">
+                            {{-- <div class="col-3">
                                 <h5>Total Kendaraan : {{ $parkir->count() }}</h5>
                                 <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
-                    <table id="example1" class="table table-bordered">
+                    {{-- <table id="example1" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th style="width: 5%;">No.</th>
@@ -105,7 +112,7 @@
                                 </tr>
                             @endforeach
                         @endif
-                    </table>
+                    </table> --}}
                 </div>
             </div>
         </div>

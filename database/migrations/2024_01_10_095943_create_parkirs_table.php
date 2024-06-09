@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('plat');
             $table->string('telp');
             $table->timestamp('tgl_masuk', $precision = 0);
+            $table->string('gambar');
+            $table->string('nama_pemilik');
             $table->enum('status', ['0', '1'])->default('0');
             $table->timestamps();
 

@@ -1,5 +1,26 @@
 @extends('layout.sidebar')
 @section('content')
+<style>
+    /* Penyesuaian CSS untuk gambar */
+    #camera-view {
+        width: 100%;
+        height: auto;
+    }
+
+    #capturedImage {
+        width: 100%;
+        height: auto;
+    }
+</style>
+<div id="myModal" class="modal">
+    <!-- Konten modal -->
+    <div class="modal-content">
+        <!-- Tombol untuk menutup modal -->
+        <span class="close">&times;</span>
+        <!-- Gambar hasil tangkapan -->
+        <img id="capturedImage" src="" alt="Captured Image">
+    </div>
+</div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -83,7 +104,9 @@
                                                                 </td>
                                                                 <td>{{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }}
                                                                 </td>
-                                                                <td><a class="btn btn-danger btn-sm"
+                                                                <td>
+                                                                    <a href="{{ route('parkir.detail', $data->idparkir)}}" class="btn btn-success btn-sm">cek data</a>
+                                                                    <a class="btn btn-danger btn-sm"
                                                                         onclick="return confirm('Apakah Anda Yakin Ingin Check Out dengan biaya parkir sebesar {{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }} Kendaraan Ini?')"
                                                                         href="{{ route('parkir.checkout', ['id' => $data->idparkir]) }}">
                                                                         Check Out
@@ -136,12 +159,54 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Telp</label>
-                                                <input type="text" class="form-control" name="telp" id="telp"
+                                                <input type="number" class="form-control" name="telp" id="telp" placeholder="Telp" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Nama Pemilik</label>
+                                                <input type="text" class="form-control" name="nama_pemilik" id="telp"
                                                     placeholder="Telp" required>
                                             </div>
+                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+                                                Ambil Foto
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal-default">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <!-- Header Modal -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Preview Foto</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+
+                                                        <!-- Body Modal -->
+                                                        <div class="modal-body">
+                                                            <!-- Tampilan kamera -->
+                                                            <video id="camera-view" autoplay playsinline></video>
+                                                        </div>
+
+                                                        <!-- Footer Modal -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                                            <button type="button" class="btn btn-primary" id="captureButton">Ambil Gambar</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+
+                                            <!-- Input hidden untuk menyimpan gambar -->
+                                            <input type="hidden" name="foto" id="foto">
+                                            <input type="hidden" name="fotoData" id="fotoData">
+
                                             <div class="form-group">
                                                 <input type="submit" name="proses" id="proses" value="Tambah"
-                                                    class="btn btn-primary">
+                                                    class="btn btn-primary mt-5">
                                             </div>
                                         </form>
                                     </div>
@@ -160,7 +225,61 @@
     <!-- /.content-wrapper -->
 @endsection
 @section('js')
-    <!-- Page specific script -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#modal-default').on('shown.bs.modal', function () {
+                var video = document.getElementById('camera-view');
+                var constraints = { video: { facingMode: "environment" }, audio: false };
+
+                navigator.mediaDevices.getUserMedia(constraints)
+                .then(function(mediaStream) {
+                    video.srcObject = mediaStream;
+                })
+                .catch(function(err) {
+                    console.log('Gagal membuka kamera: ', err);
+                });
+            });
+
+            // Tangkap gambar saat tombol "Ambil Gambar" diklik
+            $('#captureButton').on('click', function() {
+                var video = document.getElementById('camera-view');
+                var canvas = document.createElement('canvas');
+                var context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                var imageData = canvas.toDataURL('image/png');
+
+                // Menghasilkan nama file acak
+                var randomFileName = Math.random().toString(36).substring(7) + '.png';
+
+                // Simpan nama file acak dalam input hidden
+                var fotoInput = document.getElementById('foto');
+                fotoInput.value = randomFileName;
+
+                // Simpan data URI gambar dalam input hidden
+                var fotoDataInput = document.getElementById('fotoData');
+                fotoDataInput.value = imageData;
+
+                // Tutup modal
+                $('#modal-default').modal('hide');
+                $('.modal-backdrop').remove();
+            });
+
+            // Tutup modal, hentikan kamera
+            $('#modal-default').on('hidden.bs.modal', function () {
+                var video = document.getElementById('camera-view');
+                if (video.srcObject) {
+                    video.srcObject.getTracks().forEach(track => track.stop());
+                }
+            });
+        });
+    </script>
     <script>
         $(function() {
             $("#example1").DataTable({

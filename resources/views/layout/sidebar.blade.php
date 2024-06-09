@@ -26,7 +26,11 @@
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Toastr -->
 
+  <!-- Ekko Lightbox -->
+  <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/ekko-lightbox/ekko-lightbox.css">
+  <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/toastr/toastr.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="{{ asset('assets/admin/') }}/plugins/dropzone/min/dropzone.min.css">
 
@@ -113,30 +117,51 @@
           </li>
           <li class="nav-header">Laporan</li>
           <li class="nav-item">
-            <a href="{{ route('laporan.stay')}}" @if ($title == 'Laporan Kendaraan Inap') class="nav-link active" @else class="nav-link" @endif>
+            <a href="{{ route('laporan.keluar')}}" @if ($title == 'Laporan Kendaraan Keluar') class="nav-link active" @else class="nav-link" @endif>
 
              <p>
-               Laporan kendaraan inap
+               Laporan Kendaraan Keluar
              </p>
            </a>
          </li>
           <li class="nav-item">
-             <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+             {{-- <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
 
               <p>
                 Laporan masuk per hari
               </p>
-            </a>
+            </a> --}}
           </li>
           <li class="nav-item">
-             <a href="{{ route('laporan.masuk.bulan')}}" @if ($title == 'Laporan Masuk Bulanan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+             <a href="{{ route('laporan.masuk')}}" @if ($title == 'Laporan Kendaraan Masuk') class="nav-link active" @else class="nav-link" @endif>
 
               <p>
-                Laporan masuk per bulan
+                Laporan Kendaraan Masuk
               </p>
             </a>
           </li>
           <li class="nav-item">
+             <a href="{{ route('laporan.pendapatan')}}" @if ($title == 'Laporan Pendapatan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+              <p>
+                Laporan Pendapatan
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('laporan.pendapatan.user')}}" @if ($title == 'Laporan Pendapatan by User') class="nav-link active" @else class="nav-link" @endif>
+             <p>
+               Laporan Pendapatan by User
+             </p>
+           </a>
+         </li>
+         <li class="nav-item">
+            <a href="{{ route('laporan.pendapatan.kategori')}}" @if ($title == 'Laporan Pendapatan by Kategori') class="nav-link active" @else class="nav-link" @endif>
+             <p>
+               Laporan Pendapatan by Kategori
+             </p>
+           </a>
+         </li>
+          {{-- <li class="nav-item">
             <a href="{{ route('laporan.keluar.hari')}}" @if ($title == 'Laporan Keluar Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
 
              <p>
@@ -151,8 +176,8 @@
                Laporan keluar per bulan
              </p>
            </a>
-         </li>
-         
+         </li> --}}
+
         <li class="nav-item">
           <a href="{{ route('logout')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
            <i class="nav-icon fas fa-user"></i>
@@ -197,6 +222,7 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
+<script src="{{ asset('assets/admin/') }}/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <script src="{{ asset('assets/admin/') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- daterangepicker -->
 <script src="{{ asset('assets/admin/') }}/plugins/moment/moment.min.js"></script>
@@ -221,6 +247,23 @@
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="{{ asset('assets/admin/') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script src="{{ asset('assets/admin') }}/js/custom.js"></script>
+<script src="{{ asset('assets/admin/') }}/plugins/toastr/toastr.min.js"></script>
+<script>
+    $(function () {
+      $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox({
+          alwaysShowClose: true
+        });
+      });
+
+      $('.filter-container').filterizr({gutterPixels: 3});
+      $('.btn[data-filter]').on('click', function() {
+        $('.btn[data-filter]').removeClass('active');
+        $(this).addClass('active');
+      });
+    })
+  </script>
 @yield('js')
 </body>
 </html>

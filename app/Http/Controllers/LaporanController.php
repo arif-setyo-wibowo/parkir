@@ -6,86 +6,77 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Parkir;
 use App\Models\Keluar;
+use App\Models\User;
+use PDF;
 use Illuminate\Support\Facades\Session;
 
 class LaporanController extends Controller
 {
-    function masukHarian(Request $request) {
+    function keluar(Request $request) {
 
-        $data['title'] = "Laporan Masuk Harian Kendaraan";
+        $data['title'] = "Laporan Kendaraan Keluar";
 
-        if ($request->query('tgl')) {
-            $data['parkir'] = Parkir::with("kategori")->whereDate('created_at', $request->query('tgl'))->get();
-        }else{
-            $data['parkir'] = Parkir::with("kategori")->whereDate('created_at', date('Y-m-d'))->get();
+        $data['keluar'] = Keluar::with('parkir')->get();
+        $data['total'] = 0;
+        foreach ($data['keluar'] as $key => $value) {
+            $data['total'] += $value['total'];
         }
 
-        return view('laporan/laporan_masuk_hari',$data);
+        return view('laporan/laporan_kendaraan',$data);
+    }
+    function keluar_pdf(Request $request) {
+
+        $masuk = $request->query('tgl_masuk');
+        $keluar = $request->query('tgl_keluar');
+
+        $data = Keluar::join('parkir', 'keluar.idparkir', '=', 'parkir.idparkir')
+                ->join('kategori', 'parkir.idkategori', '=', 'kategori.idkategori')
+                ->where('keluar.tgl_masuk', '>=', $masuk)
+                ->where('keluar.tgl_keluar', '<=', $keluar)
+                ->select('parkir.nama_mobil', 'parkir.merk', 'parkir.warna', 'parkir.nama_pemilik', 'parkir.tgl_masuk', 'keluar.tgl_keluar', 'keluar.total')
+                ->get();
+
+
+        $pdf = PDF::loadView('pdf.laporan_keluar', compact('data','masuk', 'keluar'));
+
+        return $pdf->stream('laporan_keluar.pdf');
     }
 
-    function masukBulanan(Request $request){
-        $data['title'] = "Laporan Masuk Bulanan Kendaraan";
+    function masuk(Request $request){
+        $data['title'] = "Laporan Kendaraan Masuk";
 
-        if ($request->query('bln') && $request->query('thn')) {
-            $data['parkir'] = Parkir::with("kategori")->whereMonth('created_at', $request->query('bln'))->whereYear('tgl_masuk', $request->query('thn'))->get();
-        }else{
-            $data['parkir'] = Parkir::with("kategori")->whereMonth('created_at', now()->month)->whereYear('tgl_masuk', now()->year)->get();
-        }
-
-        return view('laporan/laporan_masuk_bulan',$data);
-    }
-
-    function keluarHarian(Request $request) {
-
-        $data['title'] = "Laporan Keluar Harian Kendaraan";
-
-        if ($request->query('tgl')) {
-            $data['parkir'] = Keluar::with("kategori")->whereDate('updated_at', $request->query('tgl'))->get();
-        }else{
-            $data['parkir'] = Keluar::with("kategori")->whereDate('updated_at', now()->toDateString())->get();
-        }
+        $data['parkir'] = Parkir::with("kategori")->where('status', '0')->get();
 
         $data['total'] = 0;
         foreach ($data['parkir'] as $key => $value) {
             $data['total'] += $value['total'];
         }
 
-        return view('laporan/laporan_keluar_hari',$data);
+        return view('laporan/laporan_kendaraan_masuk',$data);
     }
 
-    function keluarBulanan(Request $request){
-        $data['title'] = "Laporan Keluar Bulanan Kendaraan";
+    function pendapatan(Request $request) {
 
-        if ($request->query('bln') && $request->query('thn')) {
-            $data['parkir'] = Keluar::with("kategori")->whereMonth('updated_at', $request->query('bln'))->whereYear('updated_at', $request->query('thn'))->get();
-        }else{
-            $data['parkir'] = Keluar::with("kategori")->whereMonth('updated_at', now()->month)->whereYear('updated_at', now()->year)->get();
-        }
+        $data['title'] = "Laporan Pendapatan Kendaraan";
 
-        $data['total'] = 0;
-        foreach ($data['parkir'] as $key => $value) {
-            $data['total'] += $value['total'];
-        }
-
-        return view('laporan/laporan_keluar_bulan',$data);
+        return view('laporan/laporan_pendapatan',$data);
     }
 
-    function stay(Request $request){
+    function pendapatan_user(Request $request) {
 
-        if ($request->query('tgl')) {
-            $data=[
-                'title' => "Laporan Kendaraan Inap",
-                'kategori'  => Kategori::all(),
-                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('created_at', $request->query('tgl'))->get()
-            ];
-        }else{
-            $data=[
-                'title' => "Laporan Kendaraan Inap",
-                'kategori'  => Kategori::all(),
-                'parkir' => Parkir::with("kategori")->where('status', '0')->whereDate('created_at', date('Y-m-d'))->get()
-            ];
-        }
+        $data['title'] = "Laporan Pendapatan by User";
+        $data['user'] = User::all();
 
-        return view('laporan/laporan_stay',$data);
+        return view('laporan/laporan_pendapatan_user',$data);
     }
+
+    function pendapatan_kategori(Request $request) {
+
+        $data['title'] = "Laporan Pendapatan by Kategori";
+        $data['kategori'] = Kategori::all();
+
+        return view('laporan/laporan_pendapatan_kategori',$data);
+    }
+
+
 }

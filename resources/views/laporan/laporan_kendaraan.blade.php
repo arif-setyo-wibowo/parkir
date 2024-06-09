@@ -37,13 +37,16 @@
                 <?php endif ?>
                 <div class="card-body">
 
-                    <form action="" method="get">
+                    <form action="{{ route('laporan.keluar.pdf')}}">
                         <div class="row my-3">
                             <div class="col-4">
                                 Cari Tanggal :
                                 <div class="row">
-                                    <div class="col-10">
-                                        <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>
+                                    <div class="col-5">
+                                        <input type="date" name="tgl_masuk" class="form-control" required>
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="date" name="tgl_keluar" class="form-control" required>
                                     </div>
                                     <div class="col-2">
                                         <button type="submit" class="btn btn-primary">
@@ -56,7 +59,8 @@
 
                             </div>
                             <div class="col-3">
-                                <h4>Total Kendaraan : {{ $parkir->count() }}</h4>
+                                <h4>Total Kendaraan : {{ $keluar->count() }}</h4>
+                                <h5>Total Pendapatan : {{ 'Rp ' . number_format($total, 0, ',', '.') }}</h5>
                             </div>
                         </div>
                     </form>
@@ -69,22 +73,27 @@
                                 <th>Nama Mobil</th>
                                 <th>Plat Nomer</th>
                                 <th>Tanggal Masuk</th>
+                                <th>Tanggal Keluar</th>
+                                <th>Total Bayar</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        @if ($parkir->count() == 0)
+                        @if ($keluar->count() == 0)
                         <tr>
                             <td colspan="7" class="text-center">Data Kosong</td>
                         </tr>
                         @else
-                            @foreach ($parkir as $data)
+                            @foreach ($keluar as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->kategori->kategori }}</td>
-                                    <td>{{ $data->merk }}</td>
-                                    <td>{{ $data->nama_mobil }}</td>
-                                    <td>{{ $data->plat }}</td>
-                                    <td>{{ (new \DateTime($data->created_at))->format('d F Y H:i:s') }}</td>
+                                    <td>{{ $data->parkir->kategori->kategori }}</td>
+                                    <td>{{ $data->parkir->merk }}</td>
+                                    <td>{{ $data->parkir->nama_mobil }}</td>
+                                    <td>{{ $data->parkir->plat }}</td>
+                                    <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}</td>
+                                    <td>{{ (new \DateTime($data->tgl_keluar))->format('d F Y H:i:s') }}</td>
+
+                                    <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
                                     <td><button type="button" class="btn {{$data->status == '0' ? 'btn-success' : 'btn-danger'}} btn-sm">
                                         {{$data->status == '0' ? 'Aktif' : 'Sudah Keluar'}}</button>
                                     </td>
