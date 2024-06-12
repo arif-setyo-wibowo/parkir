@@ -39,9 +39,9 @@
 <div class="wrapper">
 
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('assets/admin/') }}/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> --}}
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -73,7 +73,7 @@
           <img src="{{ asset('assets/admin/') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Session::get('nama.admin')}}</a>
+          <a href="#" class="d-block">{{ Session::get('user.nama')}}</a>
         </div>
       </div>
 
@@ -83,109 +83,164 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('dashboard')}}" @if ($title == 'Dashboard') class="nav-link active" @else class="nav-link" @endif>
+            <a href="{{ url('/')}}" @if ($title == 'Dashboard') class="nav-link active" @else class="nav-link" @endif>
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          <li class="nav-header">Parkir</li>
-          <li class="nav-item">
-             <a href="{{ route('kategori')}}" @if ($title == 'Kategori Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Kategori Kendaran
-              </p>
+
+          @if (session('petugas'))
+            <li class="nav-header">Parkir</li>
+            <li class="nav-item">
+                <a href="{{ route('parkir')}}" @if ($title == 'Parkir Inap') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-columns"></i>
+                <p>
+                    Parkir
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('logout_petugas')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                Logout
+                </p>
             </a>
-          </li>
-          <li class="nav-item">
-             <a href="{{ route('parkir')}}" @if ($title == 'Parkir Inap') class="nav-link active" @else class="nav-link" @endif>
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Parkir
-              </p>
+            </li>
+          @endif
+
+          @if (session('keuangan'))
+            <li class="nav-header">Laporan</li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.keluar.keuangan')}}" @if ($title == 'Laporan Kendaraan Keluar') class="nav-link active" @else class="nav-link" @endif>
+
+                <p>
+                Laporan Kendaraan Keluar
+                </p>
             </a>
-          </li>
-          <li class="nav-item">
-             <a href="{{ route('users')}}" @if ($title == 'Users') class="nav-link active" @else class="nav-link" @endif>
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
+            </li>
+            <li class="nav-item">
+                {{-- <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+
+                <p>
+                    Laporan masuk per hari
+                </p>
+                </a> --}}
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.masuk.keuangan')}}" @if ($title == 'Laporan Kendaraan Masuk') class="nav-link active" @else class="nav-link" @endif>
+
+                <p>
+                    Laporan Kendaraan Masuk
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.pendapatan.keuangan')}}" @if ($title == 'Laporan Pendapatan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+                <p>
+                    Laporan Pendapatan
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.pendapatan.user.keuangan')}}" @if ($title == 'Laporan Pendapatan by User') class="nav-link active" @else class="nav-link" @endif>
+                <p>
+                Laporan Pendapatan by User
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.pendapatan.kategori.keuangan')}}" @if ($title == 'Laporan Pendapatan by Kategori') class="nav-link active" @else class="nav-link" @endif>
+                <p>
+                Laporan Pendapatan by Kategori
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('logout.keuangan')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                Logout
+                </p>
+            </a>
+            </li>
+          @endif
+         @if( session('admin'))
+
+            <li class="nav-header">Parkir</li>
+            <li class="nav-item">
+                <a href="{{ route('kategori')}}" @if ($title == 'Kategori Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-columns"></i>
+                <p>
+                    Kategori Kendaran
+                </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('users')}}" @if ($title == 'Users') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-columns"></i>
+                <p>
                 Users
-              </p>
+                </p>
             </a>
-          </li>
-          <li class="nav-header">Laporan</li>
-          <li class="nav-item">
+            </li>
+            <li class="nav-header">Laporan</li>
+            <li class="nav-item">
             <a href="{{ route('laporan.keluar')}}" @if ($title == 'Laporan Kendaraan Keluar') class="nav-link active" @else class="nav-link" @endif>
 
-             <p>
-               Laporan Kendaraan Keluar
-             </p>
-           </a>
-         </li>
-          <li class="nav-item">
-             {{-- <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+                <p>
+                Laporan Kendaraan Keluar
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
+                {{-- <a href="{{ route('laporan.masuk.hari')}}" @if ($title == 'Laporan Masuk Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
 
-              <p>
+                <p>
                 Laporan masuk per hari
-              </p>
+                </p>
             </a> --}}
-          </li>
-          <li class="nav-item">
-             <a href="{{ route('laporan.masuk')}}" @if ($title == 'Laporan Kendaraan Masuk') class="nav-link active" @else class="nav-link" @endif>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.masuk')}}" @if ($title == 'Laporan Kendaraan Masuk') class="nav-link active" @else class="nav-link" @endif>
 
-              <p>
+                <p>
                 Laporan Kendaraan Masuk
-              </p>
+                </p>
             </a>
-          </li>
-          <li class="nav-item">
-             <a href="{{ route('laporan.pendapatan')}}" @if ($title == 'Laporan Pendapatan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-              <p>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.pendapatan')}}" @if ($title == 'Laporan Pendapatan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
+                <p>
                 Laporan Pendapatan
-              </p>
+                </p>
             </a>
-          </li>
-          <li class="nav-item">
+            </li>
+            <li class="nav-item">
             <a href="{{ route('laporan.pendapatan.user')}}" @if ($title == 'Laporan Pendapatan by User') class="nav-link active" @else class="nav-link" @endif>
-             <p>
-               Laporan Pendapatan by User
-             </p>
-           </a>
-         </li>
-         <li class="nav-item">
+                <p>
+                Laporan Pendapatan by User
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
             <a href="{{ route('laporan.pendapatan.kategori')}}" @if ($title == 'Laporan Pendapatan by Kategori') class="nav-link active" @else class="nav-link" @endif>
-             <p>
-               Laporan Pendapatan by Kategori
-             </p>
-           </a>
-         </li>
-          {{-- <li class="nav-item">
-            <a href="{{ route('laporan.keluar.hari')}}" @if ($title == 'Laporan Keluar Harian Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-
-             <p>
-               Laporan keluar per hari
-             </p>
-           </a>
-         </li>
-         <li class="nav-item">
-            <a href="{{ route('laporan.keluar.bulan')}}" @if ($title == 'Laporan Keluar Bulanan Kendaraan') class="nav-link active" @else class="nav-link" @endif>
-
-             <p>
-               Laporan keluar per bulan
-             </p>
-           </a>
-         </li> --}}
-
-        <li class="nav-item">
-          <a href="{{ route('logout')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
-           <i class="nav-icon fas fa-user"></i>
-           <p>
-             Logout
-           </p>
-         </a>
-       </li>
+                <p>
+                Laporan Pendapatan by Kategori
+                </p>
+            </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('logout')}}" @if ($title == 'Logout') class="nav-link active" @else class="nav-link" @endif>
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                Logout
+                </p>
+            </a>
+            </li>
+         @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

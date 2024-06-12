@@ -20,20 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::controller(LoginController::class)->prefix('login')->group(function () {
+Route::controller(LoginController::class)->group(function () {
     Route::get('/', 'index')->name('login');
     Route::post('/', 'postlogin')->name('postlogin');
 });
 
-Route::middleware('user')->group(function () {
+Route::middleware('petugas')->prefix('petugas')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
-        Route::get('/', 'index')->name('dashboard');
-    });
-
-    Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
-        Route::get('/', 'index')->name('kategori');
-        Route::post('/', 'storeUpdate')->name('kategori.store.update');
-        Route::get('/delete', 'destroy')->name('delete.kategori');
+        Route::get('/', 'index')->name('dashboard.petugas');
     });
 
     Route::controller(ParkirController::class)->prefix('parkir')->group(function () {
@@ -43,13 +37,53 @@ Route::middleware('user')->group(function () {
         Route::get('/checkout', 'checkout')->name('parkir.checkout');
     });
 
+    Route::get('logout_petugas', [LoginController::class, 'logout_petugas'])->name('logout_petugas');
+});
+
+Route::middleware('keuangan')->prefix('keuangan')->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('dashboard.keuangan');
+    });
+
+    Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
+        Route::get('/keluar', 'keluar')->name('laporan.keluar.keuangan');
+        Route::get('/keluar-pdf', 'keluar_pdf')->name('laporan.keluar.pdf.keuangan');
+        Route::get('/masuk', 'masuk')->name('laporan.masuk.keuangan');
+        Route::get('/masuk-pdf', 'masuk_pdf')->name('laporan.masuk.pdf.keuangan');
+        Route::get('/pendapatan', 'pendapatan')->name('laporan.pendapatan.keuangan');
+        Route::get('/pendapatan-pdf', 'pendapatan_pdf')->name('laporan.pendapatan.pdf.keuangan');
+        Route::get('/pendapatan-user', 'pendapatan_user')->name('laporan.pendapatan.user.keuangan');
+        Route::get('/pendapatan-user-pdf', 'pendapatan_user_pdf')->name('laporan.pendapatan.by.user.pdf.keuangan');
+        Route::get('/pendapatan-kategori', 'pendapatan_kategori')->name('laporan.pendapatan.kategori.keuangan');
+        Route::get('/pendapatan-kategori-pdf', 'pendapatan_kategori_pdf')->name('laporan.pendapatan.by.kategori.keuangan');
+    });
+
+    Route::get('logout', [LoginController::class, 'logout_keuangan'])->name('logout.keuangan');
+
+});
+
+Route::middleware('user')->prefix('admin')->group(function () {
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('dashboard.admin');
+    });
+
+    Route::controller(KategoriController::class)->prefix('kategori')->group(function () {
+        Route::get('/', 'index')->name('kategori');
+        Route::post('/', 'storeUpdate')->name('kategori.store.update');
+        Route::get('/delete', 'destroy')->name('delete.kategori');
+    });
+
     Route::controller(LaporanController::class)->prefix('laporan')->group(function () {
         Route::get('/keluar', 'keluar')->name('laporan.keluar');
         Route::get('/keluar-pdf', 'keluar_pdf')->name('laporan.keluar.pdf');
         Route::get('/masuk', 'masuk')->name('laporan.masuk');
+        Route::get('/masuk-pdf', 'masuk_pdf')->name('laporan.masuk.pdf');
         Route::get('/pendapatan', 'pendapatan')->name('laporan.pendapatan');
+        Route::get('/pendapatan-pdf', 'pendapatan_pdf')->name('laporan.pendapatan.pdf');
         Route::get('/pendapatan-user', 'pendapatan_user')->name('laporan.pendapatan.user');
+        Route::get('/pendapatan-user-pdf', 'pendapatan_user_pdf')->name('laporan.pendapatan.by.user.pdf');
         Route::get('/pendapatan-kategori', 'pendapatan_kategori')->name('laporan.pendapatan.kategori');
+        Route::get('/pendapatan-kategori-pdf', 'pendapatan_kategori_pdf')->name('laporan.pendapatan.by.kategori');
     });
 
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');

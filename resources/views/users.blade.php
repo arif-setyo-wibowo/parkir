@@ -68,6 +68,7 @@
                                                 <th>No</th>
                                                 <th>Nama</th>
                                                 <th>Username</th>
+                                                <th>Role</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -77,9 +78,16 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->nama }}</td>
                                                 <td>{{ $item->username }}</td>
+                                                @if ($item->role == '0')
+                                                    <td>Admin</td>
+                                                @elseif($item->role == '1')
+                                                    <td>Petugas</td>
+                                                @elseif($item->role == '2')
+                                                    <td>Keuangan</td>
+                                                @endif
                                                     <td>
                                                         <button type="button" class="btn btn-info btn-sm"
-                                                            onclick="editPengguna('{{ $item->id }}','{{ $item->nama }}','{{ $item->username }}','{{ $item->password }}')">
+                                                            onclick="editPengguna('{{ $item->id }}','{{ $item->nama }}','{{ $item->username }}','{{ $item->password }}','{{ $item->role }}')">
                                                             <i class="fas fa-pencil-alt"></i>
                                                             Edit
                                                         </button>
@@ -112,6 +120,15 @@
                                                 placeholder="Masukkan Username" required>
                                         </div>
                                         <div class="form-group">
+                                            <label for="exampleInputEmail1">Role</label>
+                                            <select name="role" id="role" class="form-control" required>
+                                                <option value="" selected disabled>Pilih Role</option>
+                                                <option value="0">Admin</option>
+                                                <option value="1">Petugas</option>
+                                                <option value="2">Keuangan</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="exampleInputEmail1">Password</label>
                                             <input type="hidden" class="form-control" id="password_lama" name="password_lama">
                                             <input type="password" class="form-control" id="password" name="password"
@@ -121,8 +138,10 @@
                                         <div class="form-group">
                                             <input type="submit" name="proses" id="proses" value="Tambah"
                                                 class="btn btn-primary">
+                                                <a href="{{ route('users')}}" class="btn btn-danger">Kembali</a>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

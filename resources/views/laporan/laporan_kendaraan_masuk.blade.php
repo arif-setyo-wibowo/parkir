@@ -11,7 +11,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item active">{{ $title }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -37,13 +37,16 @@
                 <?php endif ?>
                 <div class="card-body">
 
-                    <form action="" method="get">
+                    <form action="{{ url('/' . session('user.role') . '/laporan/masuk-pdf') }}" target="_blank">
                         <div class="row my-3">
                             <div class="col-4">
-                                Cari Tanggal Keluar :
+                                Cari Tanggal Masuk :
                                 <div class="row">
-                                    <div class="col-10">
-                                        <input type="date" name="tgl" class="form-control" value="{{request()->query('tgl', '')}}" required>
+                                    <div class="col-5">
+                                        <input type="date" name="tgl_masuk" class="form-control" required>
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="date" name="tgl_masuk_akhir" class="form-control" required>
                                     </div>
                                     <div class="col-2">
                                         <button type="submit" class="btn btn-primary">
@@ -65,13 +68,14 @@
                         <thead>
                             <tr>
                                 <th style="width: 5%;">No.</th>
-                                <th>Kategori</th>
-                                <th>Merk</th>
                                 <th>Plat Nomer</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Tanggal Keluar</th>
+                                <th>Harga per Malam</th>
                                 <th>Lama Inap</th>
+                                <th>Merk</th>
+                                <th>Kategori</th>
+                                <th>Tanggal Masuk</th>
                                 <th>Total</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         @if ($parkir->count() == 0)
@@ -82,13 +86,22 @@
                             @foreach ($parkir as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->kategori->kategori }}</td>
-                                    <td>{{ $data->merk }}</td>
                                     <td>{{ $data->plat }}</td>
+                                    <td>{{ $data->kategori->harga }}</td>
                                     <td>{{ (new \DateTime($data->tgl_masuk))->format('d F Y H:i:s') }}</td>
-                                    <td>{{ (new \DateTime($data->tgl_keluar))->format('d F Y H:i:s') }}</td>
-                                    <td>{{max(1, floor((strtotime($data->tgl_keluar) - strtotime($data->tgl_masuk)) / 86400) + 1)}} Hari</td>
-                                    <td>{{ 'Rp ' . number_format($data->total, 0, ',', '.') }}</td>
+                                    <td>{{ $data->merk }}</td>
+                                    <td>{{ $data->kategori->kategori }}</td>
+                                    {{-- <td>{{ (new \DateTime($data->tgl_keluar))->format('d F Y H:i:s') }}</td> --}}
+                                    <td align="center">{{max(1, floor((strtotime(now()) - strtotime($data->tgl_masuk)) / 86400) + 1)}} Hari</td>
+                                    <td>{{ 'Rp ' . number_format((floor((strtotime(now()) - strtotime($data->tgl_masuk)) / 86400) + 1) * $data->kategori->harga, 0, ',', '.') }}</td>
+                                    <td>
+                                        <a href="{{ route('parkir.detail', $data->idparkir)}}" class="btn btn-success btn-sm">cek data</a>
+                                        <a class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Apakah Anda Yakin Ingin Check Out dengan biaya parkir sebesar {{ 'Rp ' . number_format(max(1, now()->diffInDays($data->tgl_masuk)+1) * $data->kategori->harga, 0, ',', '.') }} Kendaraan Ini?')"
+                                            href="{{ route('parkir.checkout', ['id' => $data->idparkir]) }}">
+                                            Check Out
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif

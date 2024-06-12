@@ -36,10 +36,10 @@
               <div class="icon">
                 <i class="fas fa-car"></i>
               </div>
-              <a href="{{ route('laporan.stay')}}" class="small-box-footer">Info Lebih Lanjut</a>
+              {{-- <a href="{{ route('laporan.masuk')}}" class="small-box-footer">Info Lebih Lanjut</a> --}}
             </div>
           </div>
-          <button onclick="notifyMe()">Notify me!</button>
+          {{-- <button onclick="notifyMe()">Notify me!</button> --}}
 
 
           <!-- ./col -->
@@ -49,7 +49,7 @@
     </section>
     <!-- /.content -->
   </div>
-  
+
 @endsection
 @section('js')
 <script>

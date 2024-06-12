@@ -11,7 +11,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item active">{{ $title }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -36,8 +36,8 @@
                 </div>
                 <?php endif ?>
                 <div class="card-body">
-
-                    <form action="{{ route('laporan.keluar.pdf')}}">
+                    
+                    <form action="{{ url('/' . session('user.role') . '/laporan/keluar-pdf') }}">
                         <div class="row my-3">
                             <div class="col-4">
                                 Cari Tanggal :

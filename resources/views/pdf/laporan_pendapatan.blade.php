@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Parkir Keluar</title>
+    <title>Laporan Pendapatan</title>
     <style>
         table {
             border-collapse: collapse;
@@ -18,43 +18,37 @@
 </head>
 <body>
 
-<h2>Laporan Parkir Keluar</h2>
-
-<p>Mulai Tanggal: {{ $masuk }}</p>
-<p>Sampai Tanggal: {{ $keluar }}</p>
+<h2>Laporan Pendapatan</h2>
+<p> Tanggal : {{ $namaBulanDipilih }} {{ $tahun }}</p>
 
 <table>
     <tr>
         <th>No</th>
+        <th>Plat</th>
         <th>Nama Mobil</th>
-        <th>Merk Mobil</th>
-        <th>Warna Mobil</th>
-        <th>Nama Pemilik</th>
+        <th>Merk</th>
+        <th>Warna</th>
+        <th>Telp</th>
         <th>Tanggal Masuk</th>
         <th>Tanggal Keluar</th>
         <th>Total Bayar</th>
     </tr>
-    @php
-        $total_pendapatan = 0; // Inisialisasi total pendapatan
-    @endphp
-    @foreach($data as $key => $item)
+    @foreach($dataKeluar as $key => $item)
         <tr>
             <td>{{ $key + 1 }}</td>
+            <td>{{ $item->plat }}</td>
             <td>{{ $item->nama_mobil }}</td>
             <td>{{ $item->merk }}</td>
             <td>{{ $item->warna }}</td>
-            <td>{{ $item->nama_pemilik }}</td>
+            <td>{{ $item->telp }}</td>
             <td>{{ $item->tgl_masuk }}</td>
             <td>{{ $item->tgl_keluar }}</td>
-            <td>{{ $item->total }}</td>
+            <td width="18%">{{ 'Rp ' . number_format($item->total, 0, ',', '.') }}</td>
         </tr>
-        @php
-            $total_pendapatan += $item->total; // Menambahkan total bayar ke total pendapatan
-        @endphp
     @endforeach
     <tr>
-        <td colspan="7" style="text-align: right;">Total Pendapatan:</td>
-        <td>{{ $total_pendapatan }}</td>
+        <td colspan="8" style="text-align: right;">Total Pendapatan:</td>
+        <td>{{ 'Rp ' . number_format($totalPendapatan, 0, ',', '.') }}</td>
     </tr>
 </table>
 

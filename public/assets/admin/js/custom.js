@@ -21,12 +21,13 @@ $("#custom-tab-tambah-edit").on("click", function() {
 });
 
 // Edit Pengguna
-function editPengguna(id, nama, username, password) {
+function editPengguna(id, nama, username, password, role) {
     $('[href="#tab-tambah-edit"]').tab("show");
     $("#id").val(id);
     $("#nama").val(nama);
     $("#username").val(username);
     $("#password_lama").val(password);
+    $("#role").val(role);
     $("#notifPassword").text("*Kosongkan Jika Tidak Ingin Merubah Password");
     $("#password").removeAttr("required");
     $("#proses").val("Update");

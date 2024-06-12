@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item active">Kategori</li>
                         </ol>
                     </div>
@@ -103,6 +103,7 @@
                                             <div class="form-group">
                                                 <input type="submit" name="proses" id="proses" value="Tambah"
                                                     class="btn btn-primary">
+                                                    <a href="{{ route('kategori')}}" class="btn btn-danger">Kembali</a>
                                             </div>
                                         </form>
                                     </div>

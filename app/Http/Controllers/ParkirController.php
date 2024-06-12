@@ -49,10 +49,16 @@ class ParkirController extends Controller
             $decodedImage = base64_decode($imageData);
 
             $imageName = $request->input('foto');
-            $path = public_path('uploads/' . $imageName);
+            $directory = public_path('uploads');
+
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+
+            $path =  $directory . '/' . $imageName;
             file_put_contents($path, $decodedImage);
 
-            $parkir->gambar = $imageName;
+            $parkir->gambar = $imageName;            $parkir->gambar = $imageName;
             $parkir->save();
             Session::flash('msg', 'Berhasil Menambah Data Check In');
             return redirect()->route('parkir');
@@ -81,6 +87,6 @@ class ParkirController extends Controller
         // dd($keluar);
         $keluar->save();
         Session::flash('msg', 'Berhasil Melakukan Checkout');
-        return redirect()->route('laporan.keluar');
+        return redirect()->route('parkir');
     }
 }

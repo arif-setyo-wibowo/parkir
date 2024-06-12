@@ -17,6 +17,7 @@ class LoginController extends Controller
         $data=[
             'title' => "Dashboard"
         ];
+        // session()->flush();
         return view('login',$data);
     }
 
@@ -35,11 +36,29 @@ class LoginController extends Controller
 
         if ($user) {
             if (password_verify($request->password, $user->password)) {
+                session()->flush();
+
+                // Set common session variables
+                session([
+                    'user.id' => $user->id,
+                    'user.username' => $user->username,
+                    'user.nama' => $user->nama,
+                ]);
+
+                // Set role-specific session variables and redirect
+                if ($user->role == 0) {
                     session(['admin' => true]);
-                    session(['user.id' => $user->id]);
-                    session(['user.admin' => $user->username]);
-                    session(['nama.admin' => $user->nama]);
-                    return redirect()->route('dashboard');
+                    session(['user.role' => 'admin']);
+                    return redirect()->route('dashboard.admin');
+                } elseif ($user->role == 1) {
+                    session(['petugas' => true]);
+                    session(['user.role' => 'petugas']);
+                    return redirect()->route('dashboard.petugas');
+                } elseif($user->role == 2){
+                    session(['keuangan' => true]);
+                    session(['user.role' => 'keuangan']);
+                    return redirect()->route('dashboard.keuangan');
+                }
             } else {
                 return redirect()->route('login')->withErrors(['error' => 'Password salah'])->withInput();
             }
@@ -51,8 +70,25 @@ class LoginController extends Controller
     public function logout (Request $request){
         session()->forget('admin');
         session()->forget('user.id');
-        session()->forget('user.admin');
-        session()->forget('nama.admin');
+        session()->forget('user.username');
+        session()->forget('user.nama');
+        session()->forget('user.role');
+        return redirect()->route('login');
+    }
+    public function logout_petugas(){
+        session()->forget('petugas');
+        session()->forget('user.id');
+        session()->forget('user.username');
+        session()->forget('user.nama');
+        session()->forget('user.role');
+        return redirect()->route('login');
+    }
+    public function logout_keuangan(){
+        session()->forget('keuangan');
+        session()->forget('user.id');
+        session()->forget('user.username');
+        session()->forget('user.nama');
+        session()->forget('user.role');
         return redirect()->route('login');
     }
 }

@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        
+
         $data=[
             'title' => "Users",
             'user' => User::all()
@@ -33,11 +33,12 @@ class UsersController extends Controller
             $user->nama = $request->nama;
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
+            $user->role = $request->role;
             $user->save();
             Session::flash('msg', 'Berhasil Menambah Data User');
             return redirect()->route('users');
         }elseif ($request->proses == 'Update') {
-            
+
             $user = User::find($request->id);
 
             $request->validate([
@@ -49,11 +50,11 @@ class UsersController extends Controller
             }else{
                 $password = Hash::make($request->password);
             }
-    
+
             if ($request->nama_user == null) {
                 session(['nama.admin' => $user->nama_user]);
             }else{
-                session()->forget('nama.admin'); 
+                session()->forget('nama.admin');
                 session(['nama.admin' => $request->nama_user]);
             }
 
@@ -61,6 +62,7 @@ class UsersController extends Controller
             $user->nama = $request->nama;
             $user->username = $request->username;
             $user->password = $password;
+            $user->role = $request->role;
             $user->save();
 
 

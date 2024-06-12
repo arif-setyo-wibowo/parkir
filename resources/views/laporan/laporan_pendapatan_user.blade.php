@@ -11,7 +11,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item active">{{ $title }}</li>
                         </ol>
                     </div><!-- /.col -->
@@ -26,7 +26,7 @@
             <div class="card card-info card-outline">
                 <!-- /.content -->
                 <div class="card-body">
-                    <form action="" method="get">
+                    <form action="{{ url('/' . session('user.role') . '/laporan/pendapatan-user-pdf') }}" target="_blank">
                         <div class="row my-3">
                             <div class="col-10">
                                 Cari Berdasar Bulan dan Tahun Pendapatan:
@@ -51,7 +51,7 @@
                                     <div class="col-3">
                                         <select name="thn" class="form-control" required>
                                             <option disabled value selected>Pilih Tahun</option>
-                                            @for ($tahun = 2000; $tahun <= 2030; $tahun++)
+                                            @for ($tahun = 2020; $tahun <= 2040; $tahun++)
                                                 <option value="{{ $tahun }}" {{ request()->input('thn') == $tahun ? 'selected' : '' }}>
                                                     {{ $tahun }}
                                                 </option>
