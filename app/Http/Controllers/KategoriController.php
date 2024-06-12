@@ -39,10 +39,16 @@ class KategoriController extends Controller
     }
 
     public function destroy(Request $request){
-        $id = $request->query('id');
-        $kategori = Kategori::find($id);
-        $kategori->delete();
-        Session::flash('msg', 'Berhasil Menghapus Data Kategori');
+        try{
+            $id = $request->query('id');
+            $kategori = Kategori::find($id);
+            $kategori->delete();
+            Session::flash('msg', 'Berhasil Menghapus Data Kategori');
+        } catch (\Illuminate\Database\QueryException $e) {
+            Session::flash('error', 'Gagal menghapus data. Data ini masih terhubung dengan data lain.');
+        } catch (\Exception $e) {
+            Session::flash('error', 'Gagal menghapus data.');
+        }
         return redirect()->route('kategori');
     }
 }
